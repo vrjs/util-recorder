@@ -9,5 +9,10 @@ describe ('recorder', function() {
     });
     it ('starts with no objects being tracked', function (){
     	r.tracked().length.should.equal(0);
+    });
+    it ('accepts new object via track', function() {
+    	r1 = new recorder()
+    	r1.track({name:'test'});
+    	r1.tracked().length.should.equal(1);
     })
 })

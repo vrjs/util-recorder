@@ -6,5 +6,9 @@ module.exports = function () {
     }, 
     this.tracked = function () {
     	return this.objects;
+    }, 
+    this.track = function (obj) {
+    	this.objects.push(obj);
+    	console.log(this.objects.length)
     }
 }

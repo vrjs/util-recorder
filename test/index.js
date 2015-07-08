@@ -7,4 +7,7 @@ describe ('recorder', function() {
     it ('returns false for active if no activated', function() {
         r.active().should.equal(false);
     });
+    it ('starts with no objects being tracked', function (){
+    	r.tracked().length.should.equal(0);
+    })
 })

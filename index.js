@@ -1,8 +1,10 @@
 
 module.exports = function () {
 	this.objects = [];
+    this.interval = 50;
+    this.activated = false;
     this.active = function () {
-    	return false;
+    	return this.activated;
     }, 
     this.tracked = function () {
     	return this.objects;
@@ -10,5 +12,8 @@ module.exports = function () {
     this.track = function (obj) {
     	this.objects.push(obj);
     	console.log(this.objects.length)
+    }
+    this.start = function () {
+        this.activated = true;
     }
 }

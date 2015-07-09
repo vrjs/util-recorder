@@ -4,6 +4,13 @@ var recorder = require('../index');
 
 var r = new recorder();
 
+var pando = {
+    id : 0,
+    name:'test', 
+    position: {x:0, y:0, z:0}, 
+    quaternion:{x:0, y:0, z:0, w:1 }
+};
+
 describe ('recorder', function() {
     it ('returns false for active if not activated', function() {
         r.active().should.equal(false);
@@ -33,11 +40,17 @@ describe('recorder samples', function() {
     it ("should record one sample per interval", function() {
         r = new recorder();
         r.interval = 50;
-        r.track({name:'test', 
-            position: {x:0, y:0, z:0}, 
-            orientation:{x:0, y:0, z:0, w:1 }});
+        r.track(pando);
         r.start()
-        clock.tick(r.interval+1);
-        r.samples.length.should.equal(2); // once on start, once after 50ms
+        clock.tick(r.interval);
+        r.samples().length.should.equal(2); // once on start, once after 50ms
+    });
+    it ("should record 4 samples after three intervals", function() {
+        r = new recorder();
+        r.interval = 10;
+        r.track(pando);
+        r.start()
+        clock.tick(r.interval*3);
+        r.samples().length.should.equal(4); 
     });
 })

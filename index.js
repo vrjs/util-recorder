@@ -3,6 +3,7 @@ module.exports = function () {
 	this.objects = [];
     this.interval = 50;
     this.activated = false;
+    this.samples = [];
     this.active = function () {
     	return this.activated;
     }, 
@@ -15,5 +16,11 @@ module.exports = function () {
     }
     this.start = function () {
         this.activated = true;
+        record_now(this);
     }
+}
+
+function record_now(recorder) {
+    recorder.samples.push(recorder.objects[0]);
+    setTimeout(record_now, recorder.interval, recorder);
 }

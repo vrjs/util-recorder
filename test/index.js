@@ -4,8 +4,12 @@ var recorder = require('../index');
 var r = new recorder();
 
 describe ('recorder', function() {
-    it ('returns false for active if no activated', function() {
+    it ('returns false for active if not activated', function() {
         r.active().should.equal(false);
+    });
+    it ('returns true for active after activated', function() {
+        r.start();
+        r.active().should.equal(true);
     });
     it ('starts with no objects being tracked', function (){
     	r.tracked().length.should.equal(0);

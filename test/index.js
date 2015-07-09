@@ -38,6 +38,7 @@ describe ('recorder', function() {
 
 describe('recorder samples', function() {
     var clock;
+    
     it ("should record one sample per interval", function(done) {
         clock = sinon.useFakeTimers();
         r = new recorder();
@@ -50,6 +51,24 @@ describe('recorder samples', function() {
           done();   
         }) // once on start, once after 50ms
     });
+
+    it ("should record one samples with properties", function(done) {
+        clock = sinon.useFakeTimers();
+        r = new recorder();
+        r.track(pando1);
+        r.start()
+        clock.tick(r.interval);
+        clock = clock.restore();
+        r.samples({}, function(err, samples){
+            var sample = samples[0];
+            sample.name.should.equal('test');
+            sample.local_position.x.should.equal(0);
+            sample.local_orientation.w.should.equal(1);
+            sample.id.should.equal(0);
+            done();   
+        }) 
+    });
+
     it ("should record 4 samples after three intervals", function(done) {
         clock = sinon.useFakeTimers();
         r = new recorder();
@@ -90,6 +109,7 @@ describe('recorder samples', function() {
           done()
         })
     });
+
     it ("should record 2 samples after three intervals for specific object if only 2 were requested", function(done) {
         clock = sinon.useFakeTimers();
         r = new recorder();

@@ -123,4 +123,20 @@ describe('recorder samples', function() {
           done();
         }, 2)
     });
+
+    it ("should allow removal of tracked objects", function(done) {
+        clock = sinon.useFakeTimers();
+        r = new recorder();
+        r.track(pando1);
+        r.track(pando2);
+        r.start()
+        clock.tick(r.interval*3);
+        r.untrack(pando2);
+        clock.tick(r.interval);
+        clock = clock.restore();
+        r.samples({}, function(err, samples){
+          samples.length.should.equal(9);   
+          done();
+        })
+    });
 })

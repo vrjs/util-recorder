@@ -15,6 +15,10 @@ module.exports = function () {
     this.track = function (obj) {
     	this.objects.push(obj);
     }
+    this.untrack = function(obj) {
+        var index = this.objects.indexOf(obj);
+        this.objects.splice(index, 1);
+    }
     this.start = function () {
         this.activated = true;
         record_now(this);

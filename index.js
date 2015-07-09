@@ -31,6 +31,25 @@ module.exports = function () {
             callback(err, val);
         });
     }
+
+    this.persist = function(filename, callback){
+        var fs = require('fs');
+        var fs = require('fs');
+        var stream = fs.createWriteStream(filename);
+        var self = this;
+        stream.once('open', function(fd) {
+            self.data.find({}, function (err, samples){
+                for (var i = 0; i < samples.length; i++ ) {
+                    stream.write(samples[i].name + "\n");
+                }
+                stream.end();
+                // delay a bit so we can open the file and get everything...
+                setTimeout(callback, 500);
+            });
+        });
+
+        
+    }
     this.record_sample = function() {
         var time_stamp = Date.now();
         // id

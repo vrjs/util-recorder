@@ -36,6 +36,38 @@ describe ('recorder', function() {
     })
 });
 
+
+
+
+describe('recorder export', function() {
+    var clock;
+    
+    it ("should persist one sample per line", function(done) {
+        clock = sinon.useFakeTimers();
+        r = new recorder();
+        r.track(pando1);
+        r.track(pando2);
+        r.start()
+        clock.tick(r.interval*10);
+        clock = clock.restore();
+
+        r.persist("test.txt", function(err) {
+            var i;
+            var count = 0;
+            require('fs').createReadStream("test.txt")
+              .on('data', function(chunk) {
+                for (i=0; i < chunk.length; ++i)
+                  if (chunk[i] == 10) count++;
+              })
+              .on('end', function() {
+                count.should.equal(22);
+                done();
+              });
+        });
+        
+    });
+});
+
 describe('recorder samples', function() {
     var clock;
     

@@ -1,5 +1,5 @@
 {
-  "name": "vrjs-recorder",
+  "name": "vrjs-util-recorder",
   "version": "0.0.0",
   "description": "position and orientation recorder for vrjs applications",
   "main": "index.js",

@@ -23,6 +23,9 @@ module.exports = function () {
         this.activated = true;
         record_now(this);
     }
+    this.stop = function() {
+        this.activated = false;
+    }
     this.samples = function(query, callback, num_samples) {
         if (num_samples) {
             query.sequence_number = {'$gte':this.sequence_number-num_samples}
@@ -75,7 +78,10 @@ module.exports = function () {
 
 function record_now(recorder) {
     recorder.record_sample()
-    setTimeout(record_now, recorder.interval, recorder);
+    if (recorder.activated) {
+        setTimeout(record_now, recorder.interval, recorder);
+    }
+    
 }
 
 

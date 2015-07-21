@@ -52,14 +52,6 @@ module.exports = function () {
     }
     this.record_sample = function() {
         var time_stamp = Date.now();
-        // id
-        // name
-        // local position
-        // local orientation (quaternion)
-        // world position
-        // world orientation (quaternion)
-        // current time
-        // sequence_number
         for (var i in this.objects) {
             var o = this.objects[i];
             var sample = {
@@ -67,6 +59,8 @@ module.exports = function () {
                 name : o.name,
                 local_position : o.position, 
                 local_orientation : o.quaternion, 
+                world_position : o.getWorldPosition(), 
+                world_orientation : o.getWorldQuaternion(),
                 time : time_stamp, 
                 sequence_number : this.sequence_number
             }

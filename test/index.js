@@ -4,17 +4,28 @@ var recorder = require('../index');
 
 var r = new recorder();
 
+var wp = function() {
+    return this.position;
+}
+var wr = function() {
+    return this.quaternion;
+}
+
 var pando1 = {
     id : 0,
     name:'test', 
     position: {x:0, y:0, z:0}, 
-    quaternion:{x:0, y:0, z:0, w:1 }
+    quaternion:{x:0, y:0, z:0, w:1 },
+    getWorldPosition: wp, 
+    getWorldQuaternion: wr
 };
 var pando2 = {
     id : 0,
     name:'test2', 
     position: {x:0, y:0, z:0}, 
-    quaternion:{x:0, y:0, z:0, w:1 }
+    quaternion:{x:0, y:0, z:0, w:1 }, 
+    getWorldPosition: wp, 
+    getWorldQuaternion: wr
 };
 
 
@@ -96,6 +107,8 @@ describe('recorder samples', function() {
             sample.name.should.equal('test');
             sample.local_position.x.should.equal(0);
             sample.local_orientation.w.should.equal(1);
+            sample.world_position.x.should.equal(0);
+            sample.world_orientation.w.should.equal(1);
             sample.id.should.equal(0);
             done();   
         }) 

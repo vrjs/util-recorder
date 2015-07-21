@@ -42,9 +42,7 @@ module.exports = function () {
         var self = this;
         stream.once('open', function(fd) {
             self.data.find({}, function (err, samples){
-                for (var i = 0; i < samples.length; i++ ) {
-                    stream.write(samples[i].name + "\n");
-                }
+                stream.write(JSON.stringify(samples));
                 stream.end();
                 // delay a bit so we can open the file and get everything...
                 setTimeout(callback, 500);
